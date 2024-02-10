@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Signup</title>
+</head>
+<body>
+  <h1>Admin Signup</h1>
+
+  <!-- Admin Signup Form -->
+  <form id="adminSignupForm">
+    <label for="adminUsername">Username:</label>
+    <input type="text" id="adminUsername" name="username" required>
+    <br>
+    <label for="adminEmail">Email:</label>
+    <input type="text" id="adminEmail" name="email" required>
+    <br>
+    <label for="adminPassword">Password:</label>
+    <input type="password" id="adminPassword" name="password" required>
+    <br>
+    <button type="button" onclick="submitForm()">Signup</button>
+  </form>
+
+  <script>
+    function submitForm() {
+      // Get form data
+      const formData = {
+        username: document.getElementById('adminUsername').value,
+        email: document.getElementById('adminEmail').value,
+        password: document.getElementById('adminPassword').value
+      };
+
+      // Send data using fetch API
+      fetch('/admin/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.text();
+        }
+        throw new Error('Network response was not ok');
+      })
+      .then(responseText => {
+        // Handle success response
+        console.log(responseText);
+      })
+      .catch(error => {
+        // Handle error
+        console.error('Error during form submission:', error.message);
+      });
+    }
+  </script>
+</body>
+</html>

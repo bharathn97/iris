@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Signup</title>
+</head>
+<body>
+  <h1>Student Signup</h1>
+
+  <!-- Student Signup Form -->
+  <form id="studentSignupForm">
+    <label for="studentUsername">Username:</label>
+    <input type="text" id="studentUsername" name="username" required>
+    <br>
+    <label for="studentEmail">Email:</label>
+    <input type="text" id="studentEmail" name="email" required>
+    <br>
+    <label for="studentPassword">Password:</label>
+    <input type="password" id="studentPassword" name="password" required>
+    <br>
+    <button type="submit" onclick="submitForm()">Signup</button>
+  </form>
+  <script>
+    function submitForm() {
+      // Get form data
+      const formData = {
+        username: document.getElementById('studentUsername').value,
+        email: document.getElementById('studentEmail').value,
+        password: document.getElementById('studentPassword').value
+      };
+
+      // Send data using fetch API
+      fetch('/student/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.text();
+        }
+        throw new Error('Network response was not ok');
+      })
+      .then(responseText => {
+        // Handle success response
+        console.log(responseText);
+      })
+      .catch(error => {
+        // Handle error
+        console.error('Error during form submission:', error.message);
+      });
+    }
+  </script>
+</body>
+</html>
